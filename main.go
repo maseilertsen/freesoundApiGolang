@@ -25,6 +25,7 @@ func main() {
 
 	http.HandleFunc("GET "+utils.ROOT_PATH, handlers.RootHandler)
 	http.HandleFunc("GET "+utils.SOUND_PATH+"{id}/", handlers.HandleSongId)
+	http.HandleFunc("GET "+utils.SOUNDS_PATH, handlers.HandleMultipleSongs)
 
 	log.Println("Starting server on port " + port + "...")
 	log.Fatal(http.ListenAndServe(":"+port, nil))

@@ -10,3 +10,11 @@ type SongInfo struct {
 		Username string `json:"username"`
 	} `json:"results"`
 }
+
+type SingleSong struct {
+	Song   string
+	Artist string
+}
+
+// MultipleSongs is simply a slice of SingleSong
+type MultipleSongs []SingleSong
