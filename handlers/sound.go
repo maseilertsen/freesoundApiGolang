@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"encoding/json"
+	"freesoundApiGolang/models"
 	"freesoundApiGolang/utils"
 	"log"
 	"net/http"
@@ -15,14 +17,15 @@ func HandleSongId(w http.ResponseWriter, r *http.Request) {
 	api_key := os.Getenv("FREESOUND_API_KEY")
 
 	// Get ID as a string
-	id := strings.TrimPrefix(r.URL.Path, utils.SOUND_PATH)
-
+	providedId := strings.TrimPrefix(r.URL.Path, utils.SOUND_PATH)
+	id := strings.TrimSuffix(providedId, "/")
 	// ID is empty
 	if id == "" {
 		http.Error(w, "Please provide an ID", http.StatusBadRequest)
 		return
 	}
 	// ID is not numeric
+	log.Println("ID provided: " + id)
 	if stringIsInt(id) != 1 {
 		http.Error(w, "ID's can only be numbers.", http.StatusBadRequest)
 		log.Println("ID provided is not numeric")
@@ -41,9 +44,20 @@ func HandleSongId(w http.ResponseWriter, r *http.Request) {
 	}
 	defer res.Body.Close()
 
-	// TODO: check that ID is only numeric
-	// TODO: Check that only one item is returned
+	var songInfo models.SongInfo
+	if err := json.NewDecoder(res.Body).Decode(&songInfo); err != nil {
+		http.Error(w, "An unexpected error occurred. Please try again later.", http.StatusInternalServerError)
+		log.Println("Failed to Marshal json (HandleSongId")
+		return
+	}
 
+	// store name and song info
+	songName := songInfo.Results[0].Username
+	artistName := songInfo.Results[0].Name
+
+	log.Printf("artist: %v - name of song: %v\n", artistName, songName)
+
+	// TODO: Check that only one item is returned
 }
 
 // Returns 1 if string is int

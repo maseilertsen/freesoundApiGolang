@@ -1,6 +1,6 @@
 package models
 
-type SongInfo []struct {
+type SongInfo struct {
 	Count    int `json:"count"`
 	Previous any `json:"previous"`
 	Next     any `json:"next"`
