@@ -57,8 +57,6 @@ func HandleSongId(w http.ResponseWriter, r *http.Request) {
 	artistName := songInfo.Results[0].Name
 
 	log.Printf("artist: %v \nName of song: %v\n", artistName, songName)
-
-	// TODO: Check that only one item is returned
 }
 
 // HandleMultipleSongs fetches multiple songs by comma-separated IDs
@@ -114,6 +112,8 @@ func HandleMultipleSongs(w http.ResponseWriter, r *http.Request) {
 
 	// Output as plain text
 	w.Header().Set("Content-Type", "text/plain")
+
+	fmt.Fprintf(w, "<Artist> - <Song>\n")
 	for _, song := range results {
 		fmt.Fprintf(w, "%s - %s\n", song.Artist, song.Song)
 	}
