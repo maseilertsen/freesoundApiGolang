@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func HandleSomething(w http.ResponseWriter, r *http.Request) {
+func HandleSongId(w http.ResponseWriter, r *http.Request) {
 
 	// Load API_key from .env
 	api_key := os.Getenv("FREESOUND_API_KEY")
@@ -30,8 +30,9 @@ func HandleSomething(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "An unexpected error orccurred.", http.StatusInternalServerError)
 		log.Println("Failed to fetch data with GET")
 	}
-	log.Println("From API: ") // todo remove
-	log.Println(res)          // todo remove
 	defer res.Body.Close()
+
+	// TODO: check that ID is only numeric
+	// TODO: Check that only one item is returned
 
 }
