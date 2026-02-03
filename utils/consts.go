@@ -6,3 +6,4 @@ const SOUND_PATH = "/song/"
 
 // FREESOUND API
 const API_V2 = "https://freesound.org/apiv2/search/text/?query="
+const MINIMAL_FIELDS = "&field=id,name,username"

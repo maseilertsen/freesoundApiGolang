@@ -29,7 +29,7 @@ func HandleSongId(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	getRequest := utils.API_V2 + id + "&token=" + api_key
+	getRequest := utils.API_V2 + id + "&token=" + api_key + utils.MINIMAL_FIELDS
 	log.Println("Request URL with api: " + getRequest) // TODO remove debug
 
 	// Get request towards FreesoundAPI with ID
