@@ -1,14 +1,18 @@
 import { useState } from 'react'
 
-export default function QueryInput() {
-  const [searchId, setSearchId] = useState('')  
+// Receives onSearch function as a prop from App.jsx
+export default function QueryInput({ onSearch }) {
+  const [searchId, setSearchId] = useState('')
 
   // This function runs when form is submitted
   function handleSubmit(e) {
-    e.preventDefault()// Prevent the browser's default form behavior (page reload)
+    e.preventDefault() // Prevent the browser's default form behavior (page reload)
 
-    // Logging value before as proof of concept.
-    console.log('Searching for ID:', searchId)
+    // Call the onSearch function passed from App.jsx
+    // This "lifts" the search action up to the parent component
+    if (searchId.trim()) {
+      onSearch(searchId)
+    }
   }
 
   return (
