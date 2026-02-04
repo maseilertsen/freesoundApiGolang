@@ -13,6 +13,9 @@ import (
 )
 
 func HandleSongId(w http.ResponseWriter, r *http.Request) {
+	// Set CORS header
+	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
+	w.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
 
 	// Load API_key from .env
 	api_key := os.Getenv("FREESOUND_API_KEY")
@@ -62,6 +65,10 @@ func HandleSongId(w http.ResponseWriter, r *http.Request) {
 // HandleMultipleSongs fetches multiple songs by comma-separated IDs
 // Usage: /sounds?ids=123,456,789
 func HandleMultipleSongs(w http.ResponseWriter, r *http.Request) {
+	// Set CORS header
+	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
+	w.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
+
 	api_key := os.Getenv("FREESOUND_API_KEY")
 
 	// Get IDs from query parameter
