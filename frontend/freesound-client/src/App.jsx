@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col items-center pt-32">
       <Header />
       {/* Pass handleSearch function down to QueryInput */}
       <QueryInput onSearch={handleSearch} />
