@@ -134,7 +134,7 @@ func HandleMultipleSongs(w http.ResponseWriter, r *http.Request) {
 
 	//fmt.Fprintf(w, "<Artist> - <Song>\n") //TODO: remove debug
 	for _, song := range results {
-		fmt.Fprintf(w, "%s - %s\n", song.Artist, song.Song)
+		fmt.Fprintf(w, "%s - %s\n", song.Song, song.Artist)
 	}
 }
 
