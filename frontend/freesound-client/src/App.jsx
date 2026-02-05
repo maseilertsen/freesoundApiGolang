@@ -3,6 +3,7 @@ import './App.css'
 import Header from './components/Header.jsx'
 import QueryInput from './components/QueryInput.jsx'
 import ResultsDisplay from './components/ResultsDisplay.jsx'
+import MultilineInput from './components/MultilineInput.jsx'
 
 const API_BASE_URL = 'http://localhost:8080'
 
@@ -52,6 +53,7 @@ function App() {
       <Header />
       {/* Pass handleSearch function down to QueryInput */}
       <QueryInput onSearch={handleSearch} />
+      <MultilineInput  />
       {/* Pass results down to ResultsDisplay */}
       <ResultsDisplay results={results} />
     </div>
