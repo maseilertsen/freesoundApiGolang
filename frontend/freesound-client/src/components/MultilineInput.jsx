@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
-// Takes raw text input and returns an array of ID strings
-// Should handle: newlines, commas, spaces as separators
-// Should filter out empty strings
+// Takes raw text input and returns an array of ID strings.
+// Handles: newlines, commas, spaces as separators, and filters out empty strings.
 function parseIds(rawText) {
   return rawText.split(/[\n,\s]+/).filter(id => id.length > 0)  
 }

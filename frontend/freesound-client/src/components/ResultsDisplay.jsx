@@ -7,10 +7,7 @@ export default function ResultsDisplay({ results }) {
     return null
   }
 
-  // Handle both single (name/username) and multi (text) result formats
   const displayText = results.text
-    ? results.text
-    : `${results.name} - ${results.username}` // not deciding the order. See 'handlers/sound.go' for order logic.
 
   function handleCopy() {
     navigator.clipboard.writeText(displayText).then(() => {

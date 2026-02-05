@@ -2,7 +2,6 @@ package utils
 
 // Paths
 const ROOT_PATH = "/"
-const SOUND_PATH = "/song/"
 const SOUNDS_PATH = "/songs"
 
 // FREESOUND API

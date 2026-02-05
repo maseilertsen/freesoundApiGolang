@@ -11,8 +11,8 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "text/html")
 
 	// Offer information for redirection to paths
-	output := "This service does not provide any functionality on root path level. Please use paths " +
-		"<a href=\"" + utils.SOUND_PATH + "\">" + utils.SOUND_PATH + "{id}" + "</a>"
+	output := "This service does not provide any functionality on root path level. Please use " +
+		"<a href=\"" + utils.SOUNDS_PATH + "\">" + utils.SOUNDS_PATH + "?ids=123,456" + "</a>"
 
 	// Write output to client
 	_, err := fmt.Fprintf(w, "%v", output)
