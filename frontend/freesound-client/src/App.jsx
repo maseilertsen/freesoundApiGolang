@@ -40,20 +40,46 @@ function App() {
       }
   }
 
-  if (loading){
-    return <p>loading... data</p>
-    }
-    if (error){
-      return <p>Error loading data</p>
-    }
+  // Handler for multiple IDs - receives array of IDs from MultilineInput
+  async function handleMultiSearch(ids) {
+    console.log('App received multi-search for:', ids)
 
+    setLoading(true)
+    setError(null)
+    setResults(null)
+
+    try {
+      const idsParam = ids.join(',')
+      const response = await fetch(`${API_BASE_URL}/songs?ids=${idsParam}`)
+      console.log('Fetch url:', `${API_BASE_URL}/songs?ids=${idsParam}`)
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      // Backend returns plain text, not JSON
+      const text = await response.text()
+      setResults({ text })
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return <p>loading... data</p>
+  }
+  if (error) {
+    return <p>Error loading data</p>
+  }
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center pt-32">
       <Header />
       {/* Pass handleSearch function down to QueryInput */}
       <QueryInput onSearch={handleSearch} />
-      <MultilineInput  />
+      <MultilineInput onSearch={handleMultiSearch} />
       {/* Pass results down to ResultsDisplay */}
       <ResultsDisplay results={results} />
     </div>

@@ -7,8 +7,10 @@ export default function ResultsDisplay({ results }) {
     return null
   }
 
-  // Format: "Song - Artist"
-  const displayText = `${results.name} - ${results.username}`
+  // Handle both single (name/username) and multi (text) result formats
+  const displayText = results.text
+    ? results.text
+    : `${results.name} - ${results.username}`
 
   function handleCopy() {
     navigator.clipboard.writeText(displayText).then(() => {

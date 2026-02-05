@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import { useState } from 'react'
 
-const MultilineInput = () => {
-  const [textAreaValue, setTextAreaValue] = useState('');
+// Takes raw text input and returns an array of ID strings
+// Should handle: newlines, commas, spaces as separators
+// Should filter out empty strings
+function parseIds(rawText) {
+  return rawText.split(/[\n,\s]+/).filter(id => id.length > 0)  
+}
 
-  const handleChange = (event) => {
-    setTextAreaValue(event.target.value);
-  };
+export default function MultilineInput({ onSearch }) {
+  const [textAreaValue, setTextAreaValue] = useState('')
+
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    const ids = parseIds(textAreaValue)
+    if (ids.length > 0) {
+      onSearch(ids)
+    }
+  }
 
   return (
-    <div className="flex flex-col gap-4 p-4 w-full max-w-md">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 w-full max-w-md">
       <textarea
-        id="multiline-text"
         value={textAreaValue}
-        onChange={handleChange}
+        onChange={(e) => setTextAreaValue(e.target.value)}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         rows={5}
-        placeholder="Enter multiple IDs"
+        placeholder="Enter IDs (separated by newlines, commas, or spaces)"
       />
       <button
         type="submit"
@@ -23,8 +34,7 @@ const MultilineInput = () => {
       >
         Search
       </button>
-    </div>
-  );
-};
+    </form>
+  )
+}
 
-export default MultilineInput;
