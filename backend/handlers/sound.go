@@ -37,7 +37,7 @@ func HandleSongId(w http.ResponseWriter, r *http.Request) {
 	}
 
 	getRequest := utils.API_V2 + id + "&token=" + api_key + utils.MINIMAL_FIELDS
-	log.Println("Request URL with api: " + getRequest) // TODO remove debug
+	//log.Println("Request URL with api: " + getRequest) // TODO remove debug
 
 	// Get request towards FreesoundAPI with ID
 	res, err := http.Get(getRequest)
@@ -55,11 +55,23 @@ func HandleSongId(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// store name and song info
-	songName := songInfo.Results[0].Username
-	artistName := songInfo.Results[0].Name
+	// Check if there is any results
+	if len(songInfo.Results) == 0 {
+		http.Error(w, "No results found for this ID", http.StatusNotFound)
+		return
+	}
 
-	log.Printf("artist: %v \nName of song: %v\n", artistName, songName)
+	// Build response
+	response := models.SingleSong{
+		Artist: songInfo.Results[0].Username,
+		Song:   songInfo.Results[0].Name,
+	}
+
+	//log.Printf("artist: %v \nName of song: %v\n", response.Artist, response.Song)// TODO remove debug
+
+	// Send JSON response to client
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }
 
 // HandleMultipleSongs fetches multiple songs by comma-separated IDs
@@ -120,7 +132,7 @@ func HandleMultipleSongs(w http.ResponseWriter, r *http.Request) {
 	// Output as plain text
 	w.Header().Set("Content-Type", "text/plain")
 
-	fmt.Fprintf(w, "<Artist> - <Song>\n")
+	//fmt.Fprintf(w, "<Artist> - <Song>\n") //TODO: remove debug
 	for _, song := range results {
 		fmt.Fprintf(w, "%s - %s\n", song.Artist, song.Song)
 	}
